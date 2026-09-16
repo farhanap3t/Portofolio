@@ -104,25 +104,28 @@ const portfolioData = {
       roleTitle: "Peran & Dampak",
       pipelineTitle: "System Pipeline & Decision Architecture",
       accessLevels: "Tingkat Hak Akses:",
-      item: {
-        title: "Sistem Pendukung Keputusan (SPK) — SDN Lebak Bulus 04",
-        period: "Mei 2025 — Des 2025",
-        summary: "Aplikasi web Sistem Pendukung Keputusan (SPK) untuk mendigitalisasi sistem penilaian kinerja guru di SDN Lebak Bulus 04, mengeliminasi bias subjektivitas dan mempercepat proses evaluasi berkala.",
-        role: "Pengembang Sistem — Merancang alur komputasi algoritma dan logika sistem.",
-        problem: "Kebutuhan akan sistem evaluasi kinerja tenaga pengajar di instansi pendidikan yang lebih terotomatisasi, transparan, dan bebas dari bias subjektivitas penilaian manual.",
-        result: "Model SPK berhasil memberikan rekomendasi peringkat kinerja guru secara akurat dan objektif serta membantu proses pengambilan keputusan pihak manajemen sekolah.",
-        tags: ["Metode SAW", "Metode TOPSIS", "Relational Database", "Multi-user Auth", "Mandatory Evidence"],
-        rolesList: ["Admin", "Penilai", "Guest"],
-        pipeline: [
-          { step: "01", title: "Data Guru", desc: "Inventarisasi data induk dan identitas guru." },
-          { step: "02", title: "Kriteria Penilaian", desc: "Konfigurasi pembobotan indikator performa kerja." },
-          { step: "03", title: "Input Data", desc: "Pengisian nilai berkala & unggah dokumen bukti dukung." },
-          { step: "04", title: "SAW / TOPSIS", desc: "Normalisasi matriks dan pembobotan preferensi." },
-          { step: "05", title: "Perhitungan", desc: "Kalkulasi jarak solusi ideal dan skor akhir." },
-          { step: "06", title: "Ranking", desc: "Penyusunan urutan peringkat objektif." },
-          { step: "07", title: "Laporan", desc: "Hasil audit yang dapat diunduh manajemen sekolah." }
-        ]
-      },
+      items: [
+        {
+          id: "spk-sdn-lebak-bulus",
+          title: "Sistem Pendukung Keputusan (SPK) — SDN Lebak Bulus 04",
+          period: "Mei 2025 — Des 2025",
+          summary: "Aplikasi web Sistem Pendukung Keputusan (SPK) untuk mendigitalisasi sistem penilaian kinerja guru di SDN Lebak Bulus 04, mengeliminasi bias subjektivitas dan mempercepat proses evaluasi berkala.",
+          role: "Pengembang Sistem — Merancang alur komputasi algoritma dan logika sistem.",
+          problem: "Kebutuhan akan sistem evaluasi kinerja tenaga pengajar di instansi pendidikan yang lebih terotomatisasi, transparan, dan bebas dari bias subjektivitas penilaian manual.",
+          result: "Model SPK berhasil memberikan rekomendasi peringkat kinerja guru secara akurat dan objektif serta membantu proses pengambilan keputusan pihak manajemen sekolah.",
+          tags: ["Metode SAW", "Metode TOPSIS", "Relational Database", "Multi-user Auth", "Mandatory Evidence"],
+          rolesList: ["Admin", "Penilai", "Guest"],
+          pipeline: [
+            { step: "01", title: "Data Guru", desc: "Inventarisasi data induk dan identitas guru." },
+            { step: "02", title: "Kriteria Penilaian", desc: "Konfigurasi pembobotan indikator performa kerja." },
+            { step: "03", title: "Input Data", desc: "Pengisian nilai berkala & unggah dokumen bukti dukung." },
+            { step: "04", title: "SAW / TOPSIS", desc: "Normalisasi matriks dan pembobotan preferensi." },
+            { step: "05", title: "Perhitungan", desc: "Kalkulasi jarak solusi ideal dan skor akhir." },
+            { step: "06", title: "Ranking", desc: "Penyusunan urutan peringkat objektif." },
+            { step: "07", title: "Laporan", desc: "Hasil audit yang dapat diunduh manajemen sekolah." }
+          ]
+        }
+      ],
       modal: {
         title: "Studi Kasus Teknis: SPK SDN Lebak Bulus 04",
         section1Title: "Ringkasan & Latar Belakang Masalah",
@@ -329,25 +332,28 @@ const portfolioData = {
       roleTitle: "Role & Impact",
       pipelineTitle: "System Pipeline & Decision Architecture",
       accessLevels: "Access Levels:",
-      item: {
-        title: "Decision Support System (DSS) — SDN Lebak Bulus 04",
-        period: "May 2025 — Dec 2025",
-        summary: "Web-based Decision Support System designed to digitize teacher performance evaluations at SDN Lebak Bulus 04, eliminating subjective evaluation bias and automating periodic reviews.",
-        role: "System Developer — Designed algorithmic computational pipelines and system logic.",
-        problem: "Need for an automated, transparent, and objective faculty evaluation system within educational institutions, removing manual evaluation bias.",
-        result: "The DSS model accurately provides objective performance rankings and assists educational administration in decisive human resource reviews.",
-        tags: ["SAW Method", "TOPSIS Method", "Relational Database", "Multi-user Auth", "Mandatory Evidence"],
-        rolesList: ["Admin", "Evaluator", "Guest"],
-        pipeline: [
-          { step: "01", title: "Faculty Data", desc: "Registration and profile master indexing." },
-          { step: "02", title: "Evaluation Criteria", desc: "Weight configuration across performance indicators." },
-          { step: "03", title: "Data Input", desc: "Periodic score entry & mandatory evidence attachment." },
-          { step: "04", title: "SAW / TOPSIS", desc: "Matrix normalization and preference weighting." },
-          { step: "05", title: "Computation", desc: "Ideal solution distance calculations." },
-          { step: "06", title: "Ranking", desc: "Objective multi-criteria performance ordering." },
-          { step: "07", title: "Reporting", desc: "Executive reports generated for administration." }
-        ]
-      },
+      items: [
+        {
+          id: "dss-sdn-lebak-bulus",
+          title: "Decision Support System (DSS) — SDN Lebak Bulus 04",
+          period: "May 2025 — Dec 2025",
+          summary: "Web-based Decision Support System designed to digitize teacher performance evaluations at SDN Lebak Bulus 04, eliminating subjective evaluation bias and automating periodic reviews.",
+          role: "System Developer — Designed algorithmic computational pipelines and system logic.",
+          problem: "Need for an automated, transparent, and objective faculty evaluation system within educational institutions, removing manual evaluation bias.",
+          result: "The DSS model accurately provides objective performance rankings and assists educational administration in decisive human resource reviews.",
+          tags: ["SAW Method", "TOPSIS Method", "Relational Database", "Multi-user Auth", "Mandatory Evidence"],
+          rolesList: ["Admin", "Evaluator", "Guest"],
+          pipeline: [
+            { step: "01", title: "Faculty Data", desc: "Registration and profile master indexing." },
+            { step: "02", title: "Evaluation Criteria", desc: "Weight configuration across performance indicators." },
+            { step: "03", title: "Data Input", desc: "Periodic score entry & mandatory evidence attachment." },
+            { step: "04", title: "SAW / TOPSIS", desc: "Matrix normalization and preference weighting." },
+            { step: "05", title: "Computation", desc: "Ideal solution distance calculations." },
+            { step: "06", title: "Ranking", desc: "Objective multi-criteria performance ordering." },
+            { step: "07", title: "Reporting", desc: "Executive reports generated for administration." }
+          ]
+        }
+      ],
       modal: {
         title: "Technical Case Study: DSS SDN Lebak Bulus 04",
         section1Title: "Summary & Problem Statement",

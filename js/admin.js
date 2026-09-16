@@ -1,6 +1,6 @@
 /**
  * Muhammad Farhan - Admin CMS Engine
- * Handles Login, CRUD for all sections, LocalStorage persistence, Exporting, and Backend Sync
+ * Handles Login, Multi-Project Management, CRUD for all sections, LocalStorage persistence, Exporting, and Backend Sync
  */
 
 (function() {
@@ -24,7 +24,7 @@
   const toastEl = document.getElementById("toast-msg");
   const adminLangSelect = document.getElementById("admin-lang-select");
 
-  // Check Session
+  // Check Session on load
   document.addEventListener("DOMContentLoaded", () => {
     const isLoggedIn = sessionStorage.getItem("portfolio_admin_auth") === "true";
     if (isLoggedIn) {
@@ -119,6 +119,32 @@
       });
     }
 
+    // Add Project Button
+    const addProjBtn = document.getElementById("add-project-btn");
+    if (addProjBtn) {
+      addProjBtn.addEventListener("click", () => {
+        ensureProjectArray();
+        const newProj = {
+          title: editingLang === "id" ? "Proyek Baru" : "New Project",
+          period: "2025 — 2026",
+          summary: editingLang === "id" ? "Deskripsi singkat tentang proyek baru..." : "Brief summary of the new project...",
+          role: editingLang === "id" ? "Pengembang Sistem" : "System Developer",
+          problem: editingLang === "id" ? "Kebutuhan atau masalah yang diselesaikan..." : "Problem addressed by this project...",
+          result: editingLang === "id" ? "Dampak dan hasil terukur dari implementasi..." : "Outcomes and measurable impact...",
+          tags: ["HTML5", "CSS3", "JavaScript", "MySQL"],
+          rolesList: ["Admin", "User"],
+          pipeline: [
+            { step: "01", title: "Input Data", desc: "Pendataan awal" },
+            { step: "02", title: "Pemrosesan", desc: "Komputasi logika sistem" },
+            { step: "03", title: "Hasil & Laporan", desc: "Penyajian keluaran" }
+          ]
+        };
+        activeData[editingLang].projects.items.push(newProj);
+        renderProjectEditor();
+        showToast("Proyek baru berhasil ditambahkan! Silakan lengkapi informasinya.");
+      });
+    }
+
     // Add Skill Category
     const addSkillCatBtn = document.getElementById("add-skill-cat-btn");
     if (addSkillCatBtn) {
@@ -165,6 +191,19 @@
     }
   }
 
+  // Ensure Project Array exists
+  function ensureProjectArray() {
+    if (!activeData || !activeData[editingLang]) return;
+    const curProj = activeData[editingLang].projects;
+    if (!curProj.items || !Array.isArray(curProj.items)) {
+      if (curProj.item) {
+        curProj.items = [curProj.item];
+      } else {
+        curProj.items = [];
+      }
+    }
+  }
+
   // Load Data
   function loadData(forceDefault = false) {
     if (!forceDefault) {
@@ -184,6 +223,7 @@
   function populateAllForms() {
     if (!activeData || !activeData[editingLang]) return;
     const cur = activeData[editingLang];
+    ensureProjectArray();
 
     // 1. Profile & Hero Form
     setVal("input-name", cur.personal.name);
@@ -230,61 +270,86 @@
     renderEducationEditor();
   }
 
-  // Render Project Editor
+  // Render Multi-Project Editor
   function renderProjectEditor() {
     const container = document.getElementById("project-editor-container");
     if (!container) return;
 
-    const proj = activeData[editingLang].projects.item;
-    container.innerHTML = `
-      <div class="form-grid">
-        <div class="form-group form-grid-full">
-          <label class="form-label">Judul Proyek</label>
-          <input type="text" class="form-input" id="input-proj-title" value="${escapeHtml(proj.title)}">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Periode Pengerjaan</label>
-          <input type="text" class="form-input" id="input-proj-period" value="${escapeHtml(proj.period)}">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Peran & Tanggung Jawab</label>
-          <input type="text" class="form-input" id="input-proj-role" value="${escapeHtml(proj.role)}">
-        </div>
-        <div class="form-group form-grid-full">
-          <label class="form-label">Ringkasan Proyek</label>
-          <textarea class="form-textarea" id="input-proj-summary">${escapeHtml(proj.summary)}</textarea>
-        </div>
-        <div class="form-group form-grid-full">
-          <label class="form-label">Problem Statement (Masalah)</label>
-          <textarea class="form-textarea" id="input-proj-problem">${escapeHtml(proj.problem)}</textarea>
-        </div>
-        <div class="form-group form-grid-full">
-          <label class="form-label">Hasil / Impact</label>
-          <textarea class="form-textarea" id="input-proj-result">${escapeHtml(proj.result)}</textarea>
-        </div>
-        <div class="form-group form-grid-full">
-          <label class="form-label">Tag Teknologi (Pisahkan dengan koma)</label>
-          <input type="text" class="form-input" id="input-proj-tags" value="${escapeHtml(proj.tags.join(", "))}">
-        </div>
-        <div class="form-group form-grid-full">
-          <label class="form-label">Tingkat Hak Akses (Pisahkan dengan koma)</label>
-          <input type="text" class="form-input" id="input-proj-roles" value="${escapeHtml(proj.rolesList.join(", "))}">
-        </div>
-      </div>
+    ensureProjectArray();
+    const items = activeData[editingLang].projects.items;
 
-      <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-admin); padding-top: 1rem;">
-        <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Langkah-Langkah Pipeline Keputusan (7 Steps)</h4>
-        <div id="pipeline-steps-editor" style="display: flex; flex-direction: column; gap: 0.5rem;">
-          ${proj.pipeline.map((p, idx) => `
-            <div style="display: grid; grid-template-columns: 60px 180px 1fr; gap: 0.5rem; align-items: center;">
-              <input type="text" class="form-input input-pipe-step" data-idx="${idx}" value="${escapeHtml(p.step)}">
-              <input type="text" class="form-input input-pipe-title" data-idx="${idx}" value="${escapeHtml(p.title)}">
-              <input type="text" class="form-input input-pipe-desc" data-idx="${idx}" value="${escapeHtml(p.desc)}">
-            </div>
-          `).join("")}
+    if (items.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+          Belum ada proyek. Klik tombol <strong>"+ Tambah Proyek Baru"</strong> di atas untuk membuat proyek pertama Anda.
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = items.map((proj, pIdx) => `
+      <div class="item-card project-edit-card" data-pidx="${pIdx}" style="margin-bottom: 2rem; border-left: 3px solid var(--brand-lime);">
+        <div class="item-card-header" style="border-bottom: 1px solid var(--border-admin); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-family: var(--font-mono); font-weight: bold; color: var(--brand-lime); font-size: 0.85rem;">PROYEK #${pIdx + 1}</span>
+            <span class="item-card-title">${escapeHtml(proj.title || "Proyek")}</span>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="window.adminCMS.deleteProject(${pIdx})">Hapus Proyek</button>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group form-grid-full">
+            <label class="form-label">Judul Proyek</label>
+            <input type="text" class="form-input proj-input-title" value="${escapeHtml(proj.title)}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Periode Pengerjaan</label>
+            <input type="text" class="form-input proj-input-period" value="${escapeHtml(proj.period)}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Peran & Tanggung Jawab</label>
+            <input type="text" class="form-input proj-input-role" value="${escapeHtml(proj.role)}">
+          </div>
+          <div class="form-group form-grid-full">
+            <label class="form-label">Ringkasan Proyek</label>
+            <textarea class="form-textarea proj-input-summary">${escapeHtml(proj.summary)}</textarea>
+          </div>
+          <div class="form-group form-grid-full">
+            <label class="form-label">Problem Statement (Masalah yang dihadapi)</label>
+            <textarea class="form-textarea proj-input-problem">${escapeHtml(proj.problem)}</textarea>
+          </div>
+          <div class="form-group form-grid-full">
+            <label class="form-label">Hasil / Impact</label>
+            <textarea class="form-textarea proj-input-result">${escapeHtml(proj.result)}</textarea>
+          </div>
+          <div class="form-group form-grid-full">
+            <label class="form-label">Tag Teknologi (Pisahkan dengan koma)</label>
+            <input type="text" class="form-input proj-input-tags" value="${escapeHtml((proj.tags || []).join(", "))}">
+          </div>
+          <div class="form-group form-grid-full">
+            <label class="form-label">Tingkat Hak Akses (Pisahkan dengan koma)</label>
+            <input type="text" class="form-input proj-input-roles" value="${escapeHtml((proj.rolesList || []).join(", "))}">
+          </div>
+        </div>
+
+        <div style="margin-top: 1.25rem; border-top: 1px dashed var(--border-admin); padding-top: 1rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+            <label class="form-label">Alur Pipeline Keputusan (Langkah Komputasi):</label>
+            <button class="btn btn-secondary btn-sm" onclick="window.adminCMS.addPipelineStep(${pIdx})">+ Tambah Step</button>
+          </div>
+          <div class="proj-pipeline-container" style="display: flex; flex-direction: column; gap: 0.5rem;">
+            ${(proj.pipeline || []).map((step, sIdx) => `
+              <div style="display: grid; grid-template-columns: 50px 160px 1fr 32px; gap: 0.5rem; align-items: center;">
+                <input type="text" class="form-input step-input-num" value="${escapeHtml(step.step)}" placeholder="01">
+                <input type="text" class="form-input step-input-title" value="${escapeHtml(step.title)}" placeholder="Nama Tahap">
+                <input type="text" class="form-input step-input-desc" value="${escapeHtml(step.desc)}" placeholder="Keterangan alur...">
+                <button class="btn btn-danger btn-sm" style="padding: 0.4rem; height: 100%; display: flex; align-items: center; justify-content: center;" onclick="window.adminCMS.deletePipelineStep(${pIdx}, ${sIdx})" title="Hapus step">&times;</button>
+              </div>
+            `).join("")}
+          </div>
         </div>
       </div>
-    `;
+    `).join("");
   }
 
   // Render Skills Editor
@@ -428,29 +493,59 @@
       cur.about.stats.locValue = getVal("input-about-loc");
     }
 
-    // 3. Collect Projects
-    const proj = cur.projects.item;
-    proj.title = getVal("input-proj-title");
-    proj.period = getVal("input-proj-period");
-    proj.role = getVal("input-proj-role");
-    proj.summary = getVal("input-proj-summary");
-    proj.problem = getVal("input-proj-problem");
-    proj.result = getVal("input-proj-result");
-    proj.tags = getVal("input-proj-tags").split(",").map(t => t.trim()).filter(Boolean);
-    proj.rolesList = getVal("input-proj-roles").split(",").map(r => r.trim()).filter(Boolean);
+    // 3. Collect Projects (Loop through all project cards)
+    ensureProjectArray();
+    const projCards = document.querySelectorAll(".project-edit-card");
+    const updatedProjects = [];
 
-    // Collect pipeline
-    const pipeSteps = document.querySelectorAll(".input-pipe-step");
-    const pipeTitles = document.querySelectorAll(".input-pipe-title");
-    const pipeDescs = document.querySelectorAll(".input-pipe-desc");
-    proj.pipeline = [];
-    pipeSteps.forEach((s, idx) => {
-      proj.pipeline.push({
-        step: s.value.trim(),
-        title: pipeTitles[idx] ? pipeTitles[idx].value.trim() : "",
-        desc: pipeDescs[idx] ? pipeDescs[idx].value.trim() : ""
+    projCards.forEach((card, idx) => {
+      const existing = cur.projects.items[idx] || {};
+      const title = card.querySelector(".proj-input-title")?.value.trim() || "Proyek";
+      const period = card.querySelector(".proj-input-period")?.value.trim() || "";
+      const role = card.querySelector(".proj-input-role")?.value.trim() || "";
+      const summary = card.querySelector(".proj-input-summary")?.value.trim() || "";
+      const problem = card.querySelector(".proj-input-problem")?.value.trim() || "";
+      const result = card.querySelector(".proj-input-result")?.value.trim() || "";
+      const tags = (card.querySelector(".proj-input-tags")?.value || "")
+        .split(",")
+        .map(t => t.trim())
+        .filter(Boolean);
+      const rolesList = (card.querySelector(".proj-input-roles")?.value || "")
+        .split(",")
+        .map(r => r.trim())
+        .filter(Boolean);
+
+      // Collect pipeline steps for this card
+      const stepNums = card.querySelectorAll(".step-input-num");
+      const stepTitles = card.querySelectorAll(".step-input-title");
+      const stepDescs = card.querySelectorAll(".step-input-desc");
+      const pipeline = [];
+      stepNums.forEach((sNum, sIdx) => {
+        pipeline.push({
+          step: sNum.value.trim(),
+          title: stepTitles[sIdx] ? stepTitles[sIdx].value.trim() : "",
+          desc: stepDescs[sIdx] ? stepDescs[sIdx].value.trim() : ""
+        });
+      });
+
+      updatedProjects.push({
+        ...existing,
+        title,
+        period,
+        role,
+        summary,
+        problem,
+        result,
+        tags,
+        rolesList,
+        pipeline
       });
     });
+
+    cur.projects.items = updatedProjects;
+    if (updatedProjects.length > 0) {
+      cur.projects.item = updatedProjects[0];
+    }
 
     // 4. Collect Education
     cur.education.degree.title = getVal("input-edu-degree");
@@ -469,7 +564,7 @@
       body: JSON.stringify({ data: activeData })
     }).catch(() => {});
 
-    showToast("✓ Semua perubahan berhasil disimpan dan langsung aktif!");
+    showToast("✓ Semua perubahan (termasuk proyek) berhasil disimpan!");
   }
 
   // Export data.js
@@ -512,6 +607,30 @@
 
   // Global methods for inline handlers
   window.adminCMS = {
+    deleteProject(idx) {
+      ensureProjectArray();
+      if (confirm("Yakin ingin menghapus proyek ini?")) {
+        activeData[editingLang].projects.items.splice(idx, 1);
+        renderProjectEditor();
+        showToast("Proyek berhasil dihapus.");
+      }
+    },
+    addPipelineStep(pIdx) {
+      ensureProjectArray();
+      const proj = activeData[editingLang].projects.items[pIdx];
+      if (!proj.pipeline) proj.pipeline = [];
+      const nextNum = String(proj.pipeline.length + 1).padStart(2, '0');
+      proj.pipeline.push({ step: nextNum, title: "Tahap Baru", desc: "Keterangan tahap..." });
+      renderProjectEditor();
+    },
+    deletePipelineStep(pIdx, sIdx) {
+      ensureProjectArray();
+      const proj = activeData[editingLang].projects.items[pIdx];
+      if (proj && proj.pipeline) {
+        proj.pipeline.splice(sIdx, 1);
+        renderProjectEditor();
+      }
+    },
     updateSkillCatName(catIdx, val) {
       activeData[editingLang].skills.categories[catIdx].name = val.trim();
     },

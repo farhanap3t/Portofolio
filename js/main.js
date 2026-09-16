@@ -363,21 +363,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderFeaturedProject(projectsData) {
     const container = document.getElementById("featured-project-container");
-    if (!container || !projectsData || !projectsData.item) return;
+    if (!container || !projectsData) return;
 
-    const item = projectsData.item;
+    const items = projectsData.items && projectsData.items.length > 0
+      ? projectsData.items
+      : (projectsData.item ? [projectsData.item] : []);
 
-    container.innerHTML = `
-      <div class="project-card">
+    container.innerHTML = items.map((item, idx) => `
+      <div class="project-card" style="margin-bottom: 2.5rem;">
         <div class="project-card-header">
           <div class="project-meta-bar">
-            <span class="project-featured-badge">${projectsData.featuredTag}</span>
+            <span class="project-featured-badge">${projectsData.featuredTag} ${items.length > 1 ? `#${idx + 1}` : ''}</span>
             <span class="project-period">${item.period}</span>
           </div>
           <h3 class="project-title">${item.title}</h3>
           <p class="project-summary">${item.summary}</p>
           <div class="project-tags-row">
-            ${item.tags.map(t => `<span class="tech-tag">${t}</span>`).join("")}
+            ${(item.tags || []).map(t => `<span class="tech-tag">${t}</span>`).join("")}
           </div>
         </div>
         
@@ -399,6 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
 
+        ${item.pipeline && item.pipeline.length > 0 ? `
         <div class="pipeline-section">
           <h4 class="pipeline-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -413,26 +416,67 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
             `).join("")}
           </div>
-        </div>
+        </div>` : ''}
 
         <div class="project-card-footer">
           <div class="roles-wrapper">
             <span>${projectsData.accessLevels}</span>
-            ${item.rolesList.map(r => `<span class="role-badge">${r}</span>`).join("")}
+            ${(item.rolesList || []).map(r => `<span class="role-badge">${r}</span>`).join("")}
           </div>
-          <button id="open-case-study-btn" class="btn btn-outline btn-sm">
+          <button class="btn btn-outline btn-sm open-case-study-btn" data-idx="${idx}">
             ${projectsData.caseStudyBtn}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
           </button>
         </div>
       </div>
-    `;
+    `).join("");
 
-    // Reattach modal open event
-    const newBtn = document.getElementById("open-case-study-btn");
-    if (newBtn) {
-      newBtn.addEventListener("click", openModal);
+    // Attach click event for each project's modal
+    container.querySelectorAll(".open-case-study-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const idx = parseInt(btn.getAttribute("data-idx"), 10);
+        openProjectModal(items[idx], projectsData);
+      });
+    });
+  }
+
+  function openProjectModal(item, projectsData) {
+    if (!caseStudyModal || !item) return;
+
+    const modalData = item.modal || {
+      title: item.title,
+      section1Title: projectsData.problemTitle,
+      section1Body: item.problem,
+      section2Title: projectsData.roleTitle,
+      section2Intro: `<strong>${item.role}</strong>`,
+      section2Points: [item.result],
+      section3Title: projectsData.pipelineTitle,
+      section3Steps: (item.pipeline || []).map(p => `[${p.step}] ${p.title} - ${p.desc}`),
+      section4Title: "Hasil & Dampak / Result & Impact",
+      section4Body: item.result
+    };
+
+    updateText("modal-title-text", modalData.title);
+    updateText("modal-sec1-title", modalData.section1Title);
+    updateText("modal-sec1-body", modalData.section1Body);
+    updateText("modal-sec2-title", modalData.section2Title);
+    updateHtml("modal-sec2-intro", modalData.section2Intro);
+
+    const modalPointsList = document.getElementById("modal-sec2-points");
+    if (modalPointsList) {
+      modalPointsList.innerHTML = (modalData.section2Points || []).map(pt => `<li>${pt}</li>`).join("");
     }
+
+    updateText("modal-sec3-title", modalData.section3Title);
+    const modalStepsEl = document.getElementById("modal-sec3-steps");
+    if (modalStepsEl) {
+      modalStepsEl.innerHTML = (modalData.section3Steps || []).join("<br>");
+    }
+
+    updateText("modal-sec4-title", modalData.section4Title);
+    updateText("modal-sec4-body", modalData.section4Body);
+
+    openModal();
   }
 
   function renderExperience(items) {
