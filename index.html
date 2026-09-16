@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags (PRD NFR-04) -->
+  <title>Muhammad Farhan — Informatics Engineering Portfolio</title>
+  <meta name="description" content="Personal portfolio of Muhammad Farhan, Informatics Engineering graduate focused on web development, information systems, and IT infrastructure.">
+  <meta name="author" content="Muhammad Farhan">
+  <meta name="keywords" content="Muhammad Farhan, Informatics Engineering, Teknik Informatika, Web Development, IT Infrastructure, SPK, SAW, TOPSIS, Portfolio">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Muhammad Farhan — Informatics Engineering Portfolio">
+  <meta property="og:description" content="Personal portfolio of Muhammad Farhan, Informatics Engineering graduate focused on web development, information systems, and IT infrastructure.">
+  <meta property="og:type" content="website">
+
+  <!-- Typography: Inter & JetBrains Mono for High-Precision Engineering Aesthetics -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       SITE HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand-identity" aria-label="Muhammad Farhan Home">
+        <span class="brand-badge">MF</span>
+        <div class="brand-text">
+          <span class="brand-name">Muhammad Farhan</span>
+          <span class="brand-role">Informatics Engineering</span>
+        </div>
+      </a>
+
+      <!-- Desktop & Mobile Nav Links -->
+      <nav aria-label="Main Navigation">
+        <ul id="nav-links" class="nav-links">
+          <li><a href="#about" class="nav-link" id="nav-about">Tentang</a></li>
+          <li><a href="#skills" class="nav-link" id="nav-skills">Keahlian</a></li>
+          <li><a href="#projects" class="nav-link" id="nav-projects">Proyek</a></li>
+          <li><a href="#experience" class="nav-link" id="nav-experience">Pengalaman</a></li>
+          <li><a href="#education" class="nav-link" id="nav-education">Pendidikan</a></li>
+          <li><a href="#contact" class="nav-link" id="nav-contact">Kontak</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions: Language Switcher, CV Download & Mobile Hamburger -->
+      <div class="header-actions">
+        <button id="lang-toggle-btn" class="lang-toggle" aria-label="Ganti Bahasa / Switch Language">
+          <span>LANG:</span> <strong class="active-lang">ID</strong>
+        </button>
+        <a href="assets/docs/CV_Muhammad_Farhan.pdf" download class="btn btn-primary btn-sm" id="nav-cv-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Unduh CV
+        </a>
+        <button id="mobile-nav-toggle" class="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================================================
+         HERO / LANDING SECTION (FR-01)
+         ========================================================================== -->
+    <section id="home" class="hero-section">
+      <div class="container">
+        <div class="hero-grid">
+          <!-- Left Column: Bio & Core Pitch -->
+          <div class="hero-content">
+            <div class="hero-badge-container">
+              <span class="status-badge" id="hero-badge">
+                <span class="status-dot"></span>
+                Tersedia untuk Peluang Baru & Magang
+              </span>
+            </div>
+
+            <h1 class="hero-name">Muhammad Farhan</h1>
+            <div class="hero-title">Informatics Engineering Graduate</div>
+
+            <div class="hero-tags">
+              <span>Web Development</span>
+              <span class="tag-separator">•</span>
+              <span>Information Systems</span>
+              <span class="tag-separator">•</span>
+              <span>IT Infrastructure</span>
+            </div>
+
+            <p class="hero-summary" id="hero-summary">
+              Lulusan Teknik Informatika dengan minat kuat di bidang pengembangan sistem dan pemeliharaan infrastruktur TI. Memiliki pengalaman dalam merancang Sistem Pendukung Keputusan (SPK) serta terbiasa melakukan troubleshooting perangkat keras dan lunak untuk mengoptimalkan performa sistem.
+            </p>
+
+            <div class="hero-cta">
+              <a href="#projects" class="btn btn-primary" id="hero-view-projects">
+                Lihat Proyek
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+              <a href="assets/docs/CV_Muhammad_Farhan.pdf" download class="btn btn-secondary" id="hero-download-cv">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unduh CV (PDF)
+              </a>
+            </div>
+
+            <!-- Key Metrics Bar -->
+            <div class="hero-metrics">
+              <div class="metric-card">
+                <span class="metric-value" id="metric-val-1">3.33</span>
+                <span class="metric-label" id="metric-lbl-1">IPK Sarjana</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-value" id="metric-val-2">Sistem & IT Infra</span>
+                <span class="metric-label" id="metric-lbl-2">Spesialisasi</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-value" id="metric-val-3">Teknik Informatika</span>
+                <span class="metric-label" id="metric-lbl-3">Pendidikan</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Technical Identity Card -->
+          <div class="hero-visual">
+            <div class="hero-visual-card">
+              <div class="card-header-bar">
+                <div class="window-dots">
+                  <span class="window-dot active"></span>
+                  <span class="window-dot"></span>
+                  <span class="window-dot"></span>
+                </div>
+                <span>profile.config.json</span>
+              </div>
+
+              <!-- Professional Avatar Graphic -->
+              <div class="profile-avatar-frame">
+                <svg class="profile-avatar-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+
+              <div class="profile-card-details">
+                <div class="detail-row">
+                  <span class="detail-key">Almamater:</span>
+                  <span class="detail-val">Univ. Pamulang</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-key">Fokus Studi:</span>
+                  <span class="detail-val">Rekayasa Perangkat Lunak & SPK</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-key">Domisili:</span>
+                  <span class="detail-val">Pamulang, Tangerang Selatan</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-key">Status:</span>
+                  <span class="detail-val" style="color: var(--brand-lime);">Open for Opportunities</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         ABOUT ME SECTION (FR-02)
+         ========================================================================== -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow" id="about-title">Tentang Saya</span>
+          <h2 class="section-title" id="about-subtitle">Latar Belakang & Fokus Profesional</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-bio">
+            <p id="about-bio-text">
+              Lulusan Teknik Informatika dengan minat kuat di bidang pengembangan sistem dan pemeliharaan infrastruktur TI. Memiliki pengalaman dalam merancang Sistem Pendukung Keputusan (SPK) serta terbiasa melakukan troubleshooting perangkat keras dan lunak untuk mengoptimalkan performa sistem.
+            </p>
+            <p>
+              Dengan latar belakang akademik yang kokoh di bidang ilmu komputer dan pengalaman praktis dalam perancangan algoritma serta administrasi jaringan, saya berkomitmen untuk menghadirkan solusi teknologi yang terstruktur, efisien, dan berdampak nyata bagi instansi maupun bisnis.
+            </p>
+          </div>
+
+          <div class="about-stats-grid">
+            <div class="stat-item">
+              <span class="stat-label">Pendidikan Terakhir</span>
+              <span class="stat-value">Sarjana Teknik Informatika (S.Kom)</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Universitas Pamulang</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Indeks Prestasi Kumulatif (IPK)</span>
+              <span class="stat-value" style="color: var(--brand-lime);">3.33 / 4.00</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Skala 4.00</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Lokasi Saat Ini</span>
+              <span class="stat-value">Pamulang, Tangerang Selatan</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Banten, Indonesia</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SKILLS SECTION (FR-03)
+         Categorized cleanly without fake percentage bars (per PRD)
+         ========================================================================== -->
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow" id="skills-title">Keahlian Teknis & Inti</span>
+          <h2 class="section-title" id="skills-subtitle">Pengelompokan kompetensi berdasarkan ranah kerja nyata</h2>
+        </div>
+
+        <div id="skills-container" class="skills-grid">
+          <!-- Populated dynamically via js/main.js & js/data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PROJECTS SECTION (FR-04, FR-05)
+         Featured Case Study: SPK SDN Lebak Bulus 04
+         ========================================================================== -->
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow" id="projects-title">Proyek Pilihan</span>
+          <h2 class="section-title" id="projects-subtitle">Studi kasus implementasi sistem nyata dengan dampak terukur</h2>
+        </div>
+
+        <div id="featured-project-container">
+          <!-- Populated dynamically via js/main.js & js/data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         EXPERIENCE SECTION (FR-06)
+         ========================================================================== -->
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow" id="experience-title">Pengalaman Kerja</span>
+          <h2 class="section-title" id="experience-subtitle">Rekam jejak operasional, tanggung jawab kerja, dan ketepatan waktu</h2>
+        </div>
+
+        <div id="experience-container" class="experience-list">
+          <!-- Populated dynamically via js/main.js & js/data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         EDUCATION & CERTIFICATIONS SECTION (FR-07, FR-08)
+         ========================================================================== -->
+    <section id="education" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow" id="education-title">Pendidikan & Sertifikasi</span>
+          <h2 class="section-title" id="education-subtitle">Kualifikasi akademik formal dan validasi kompetensi kejuruan</h2>
+        </div>
+
+        <div class="edu-cert-grid">
+          <!-- Education Details -->
+          <div id="education-details" class="edu-card">
+            <!-- Populated dynamically -->
+          </div>
+
+          <!-- Certifications -->
+          <div class="cert-card">
+            <span class="card-tag">Sertifikasi & Lisensi</span>
+            <div id="certifications-list" class="cert-list">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CONTACT SECTION (FR-09)
+         ========================================================================== -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow" id="contact-title">Hubungi Saya</span>
+          <h2 class="section-title" id="contact-subtitle">Let's Work Together</h2>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Contact Direct Information -->
+          <div class="contact-info-panel">
+            <p class="contact-pitch" id="contact-pitch">
+              Saya sangat antusias untuk berkontribusi melalui program magang maupun peran profesional lainnya yang memungkinkan saya memberikan dampak positif melalui pengembangan sistem dan pemeliharaan infrastruktur TI.
+            </p>
+
+            <h3 style="font-size: 1.1rem; color: var(--text-primary); margin-top: 1rem;" id="contact-info-title">
+              Saluran Komunikasi Langsung
+            </h3>
+
+            <div class="contact-channels">
+              <a href="mailto:farhn.mhmmad@gmail.com" class="channel-item">
+                <div class="channel-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div class="channel-content">
+                  <span class="channel-label" id="contact-email-label">Email</span>
+                  <span class="channel-val">farhn.mhmmad@gmail.com</span>
+                </div>
+              </a>
+
+              <a href="https://wa.me/62895331284320" target="_blank" rel="noopener noreferrer" class="channel-item">
+                <div class="channel-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <div class="channel-content">
+                  <span class="channel-label" id="contact-phone-label">Telepon / WhatsApp</span>
+                  <span class="channel-val">+62 895-3312-84320</span>
+                </div>
+              </a>
+
+              <div class="channel-item">
+                <div class="channel-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="channel-content">
+                  <span class="channel-label" id="contact-location-label">Lokasi</span>
+                  <span class="channel-val">Pamulang, Tangerang Selatan</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-direct-actions">
+              <a href="mailto:farhn.mhmmad@gmail.com" class="btn btn-primary" id="contact-email-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Email Me
+              </a>
+              <a href="https://www.linkedin.com/in/muhammad-farhan" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="contact-linkedin-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                LinkedIn
+              </a>
+            </div>
+          </div>
+
+          <!-- Contact Form Card -->
+          <div class="contact-form-card">
+            <h3 class="contact-form-title" id="contact-form-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+              Kirim Pesan Langsung
+            </h3>
+
+            <form id="contact-form">
+              <div class="form-group">
+                <label for="form-name" class="form-label">Nama Lengkap *</label>
+                <input type="text" id="form-name" class="form-input" required placeholder="Nama Lengkap Anda">
+              </div>
+
+              <div class="form-group">
+                <label for="form-email" class="form-label">Email Anda *</label>
+                <input type="email" id="form-email" class="form-input" required placeholder="alamat.email@anda.com">
+              </div>
+
+              <div class="form-group">
+                <label for="form-subject" class="form-label">Subjek / Topik</label>
+                <input type="text" id="form-subject" class="form-input" placeholder="Terkait Peluang / Diskusi Proyek">
+              </div>
+
+              <div class="form-group">
+                <label for="form-message" class="form-label">Pesan *</label>
+                <textarea id="form-message" class="form-textarea" required placeholder="Tuliskan pesan atau penawaran Anda di sini..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;" id="contact-submit-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Kirim Pesan
+              </button>
+
+              <div id="form-alert" class="form-alert" role="alert"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       CASE STUDY DETAIL MODAL (FR-05)
+       ========================================================================== -->
+  <div id="case-study-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title-text">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modal-title-text" class="modal-title">Studi Kasus Teknis: SPK SDN Lebak Bulus 04</h3>
+        <button id="close-case-study-btn" class="modal-close-btn" aria-label="Tutup Dialog Modal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div>
+          <h4 style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
+            Ringkasan & Latar Belakang Masalah
+          </h4>
+          <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+            SDN Lebak Bulus 04 membutuhkan mekanisme evaluasi kinerja tenaga pengajar yang terotomatisasi, transparan, dan terbebas dari bias subjektivitas. Proses penilaian manual sebelumnya memakan waktu audit yang lama dan rentan terhadap ketidaksesuaian pembobotan indikator penilaian.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
+            Peran & Kontribusi Utama
+          </h4>
+          <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+            Sebagai <strong>Pengembang Sistem</strong>, tanggung jawab utama berfokus pada:
+          </p>
+          <ul style="color: var(--text-secondary); margin-left: 1.25rem; margin-top: 0.5rem; line-height: 1.7; font-size: 0.9rem;">
+            <li>Merancang arsitektur basis data relasional untuk integritas data penilaian dan bukti dukung fisik.</li>
+            <li>Mengimplementasikan alur komputasi algoritma Multi-Criteria Decision Making (MCDM) menggunakan metode SAW (Simple Additive Weighting) dan TOPSIS.</li>
+            <li>Membangun manajemen hak akses berlapis (Multi-user Authentication: Admin, Penilai, Guest) untuk menjaga kerahasiaan dan akuntabilitas data.</li>
+            <li>Menyusun modul validasi berkas penilaian wajib (Mandatory Evidence).</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
+            Alur Komputasi Keputusan
+          </h4>
+          <div style="background: var(--bg-code); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8;">
+            [1] Input Data Guru & Kriteria Penilaian<br>
+            &nbsp;↓<br>
+            [2] Pembentukan Matriks Keputusan (X)<br>
+            &nbsp;↓<br>
+            [3] Normalisasi Matriks (SAW / TOPSIS)<br>
+            &nbsp;↓<br>
+            [4] Matriks Ternormalisasi Terbobot (V)<br>
+            &nbsp;↓<br>
+            [5] Penentuan Solusi Ideal Positif (A+) & Negatif (A-)<br>
+            &nbsp;↓<br>
+            [6] Kalkulasi Jarak & Nilai Preferensi Akhir<br>
+            &nbsp;↓<br>
+            [7] Perangkingan Otomatis & Hasil Laporan Manajemen
+          </div>
+        </div>
+
+        <div>
+          <h4 style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
+            Hasil & Dampak Implementasi
+          </h4>
+          <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+            Model SPK berhasil memberikan rekomendasi peringkat kinerja guru secara akurat dan objektif, memangkas durasi rekapitulasi evaluasi, serta menjadi acuan berbasis data yang valid bagi pihak manajemen sekolah dalam pengambilan keputusan.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SITE FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-credits">
+        <span class="footer-name">Muhammad Farhan</span>
+        <span class="footer-copy">Sarjana Teknik Informatika — Universitas Pamulang. All rights reserved.</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="mailto:farhn.mhmmad@gmail.com">Email</a>
+        <span>•</span>
+        <a href="https://wa.me/62895331284320" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <span>•</span>
+        <a href="https://www.linkedin.com/in/muhammad-farhan" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <span>•</span>
+        <a href="#home">Kembali ke Atas ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

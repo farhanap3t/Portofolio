@@ -1,0 +1,23 @@
+{
+  "name": "portfolio-backend",
+  "version": "1.0.0",
+  "description": "REST API Backend for Muhammad Farhan Personal Portfolio",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "portfolio",
+    "api",
+    "express",
+    "nodejs"
+  ],
+  "author": "Muhammad Farhan",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
