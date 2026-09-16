@@ -30,6 +30,75 @@
     } else {
       showLogin();
     }
+
+    initConfirmModal();
+  }
+
+  // ==========================================================================
+  // BOOTSTRAP CONFIRMATION MODAL CONTROLLER
+  // ==========================================================================
+  let pendingConfirmCallback = null;
+
+  function initConfirmModal() {
+    const actionBtn = document.getElementById("confirm-modal-action-btn");
+    const modalEl = document.getElementById("confirmDeleteModal");
+
+    if (actionBtn) {
+      actionBtn.addEventListener("click", () => {
+        if (modalEl && typeof bootstrap !== "undefined" && bootstrap.Modal) {
+          const bsModal = bootstrap.Modal.getInstance(modalEl);
+          if (bsModal) bsModal.hide();
+        }
+        if (typeof pendingConfirmCallback === "function") {
+          const cb = pendingConfirmCallback;
+          pendingConfirmCallback = null;
+          cb();
+        }
+      });
+    }
+
+    if (modalEl) {
+      modalEl.addEventListener("hidden.bs.modal", () => {
+        pendingConfirmCallback = null;
+      });
+    }
+  }
+
+  function showConfirmModal(options) {
+    const {
+      title = "Konfirmasi Hapus",
+      message = "Apakah Anda yakin ingin menghapus item ini?",
+      confirmText = "Ya, Hapus",
+      confirmClass = "btn-danger",
+      onConfirm
+    } = options || {};
+
+    pendingConfirmCallback = onConfirm;
+
+    const modalEl = document.getElementById("confirmDeleteModal");
+    const titleEl = document.getElementById("confirm-modal-title");
+    const msgEl = document.getElementById("confirm-modal-message");
+    const actionBtn = document.getElementById("confirm-modal-action-btn");
+
+    if (titleEl) titleEl.textContent = title;
+    if (msgEl) msgEl.innerHTML = message;
+    if (actionBtn) {
+      actionBtn.textContent = confirmText;
+      actionBtn.className = `btn ${confirmClass} btn-sm`;
+    }
+
+    if (modalEl && typeof bootstrap !== "undefined" && bootstrap.Modal) {
+      const bsModal = bootstrap.Modal.getOrCreateInstance(modalEl);
+      bsModal.show();
+    } else {
+      // Graceful fallback if bootstrap JS is unavailable
+      const plainMsg = message.replace(/<[^>]*>?/gm, "");
+      if (window.confirm(plainMsg)) {
+        if (typeof onConfirm === "function") {
+          onConfirm();
+        }
+      }
+    }
   }
 
   function showLogin() {
@@ -550,11 +619,19 @@
 
     deleteProject(pIdx) {
       syncProjectsFromDom();
-      if (confirm("Yakin ingin menghapus proyek ini?")) {
-        activeData[editingLang].projects.items.splice(pIdx, 1);
-        renderProjectEditor();
-        showToast("Proyek berhasil dihapus.");
-      }
+      const proj = activeData[editingLang].projects.items[pIdx];
+      const title = proj && proj.title ? proj.title : `Proyek #${pIdx + 1}`;
+      showConfirmModal({
+        title: "Hapus Proyek Portofolio",
+        message: `Apakah Anda yakin ingin menghapus proyek <strong>"${escapeHtml(title)}"</strong>? Data proyek dan seluruh tahapan pipelinenya akan dihapus.`,
+        confirmText: "Ya, Hapus Proyek",
+        confirmClass: "btn-danger",
+        onConfirm: () => {
+          activeData[editingLang].projects.items.splice(pIdx, 1);
+          renderProjectEditor();
+          showToast("Proyek berhasil dihapus.");
+        }
+      });
     },
 
     addPipelineStep(pIdx) {
@@ -569,10 +646,21 @@
     deletePipelineStep(pIdx, sIdx) {
       syncProjectsFromDom();
       const proj = activeData[editingLang].projects.items[pIdx];
-      if (proj && proj.pipeline) {
-        proj.pipeline.splice(sIdx, 1);
-        renderProjectEditor();
-      }
+      const step = proj && proj.pipeline ? proj.pipeline[sIdx] : null;
+      const stepTitle = step && step.title ? step.title : `Langkah #${sIdx + 1}`;
+      showConfirmModal({
+        title: "Hapus Langkah Pipeline",
+        message: `Hapus tahap langkah <strong>"${escapeHtml(stepTitle)}"</strong> dari alur proyek ini?`,
+        confirmText: "Ya, Hapus Langkah",
+        confirmClass: "btn-danger",
+        onConfirm: () => {
+          if (proj && proj.pipeline) {
+            proj.pipeline.splice(sIdx, 1);
+            renderProjectEditor();
+            showToast("Langkah alur berhasil dihapus.");
+          }
+        }
+      });
     },
 
     addNewSkillCat() {
@@ -589,10 +677,19 @@
     },
 
     deleteSkillCat(catIdx) {
-      if (confirm("Hapus kategori keahlian ini?")) {
-        activeData[editingLang].skills.categories.splice(catIdx, 1);
-        renderSkillsEditor();
-      }
+      const cat = activeData[editingLang].skills.categories[catIdx];
+      const catName = cat && cat.name ? cat.name : `Kategori #${catIdx + 1}`;
+      showConfirmModal({
+        title: "Hapus Kategori Keahlian",
+        message: `Apakah Anda yakin ingin menghapus kategori <strong>"${escapeHtml(catName)}"</strong> beserta semua item keahlian di dalamnya?`,
+        confirmText: "Ya, Hapus Kategori",
+        confirmClass: "btn-danger",
+        onConfirm: () => {
+          activeData[editingLang].skills.categories.splice(catIdx, 1);
+          renderSkillsEditor();
+          showToast("Kategori keahlian berhasil dihapus.");
+        }
+      });
     },
 
     updateSkillCatName(catIdx, val) {
@@ -626,10 +723,19 @@
     },
 
     deleteExp(idx) {
-      if (confirm("Hapus pengalaman ini?")) {
-        activeData[editingLang].experience.items.splice(idx, 1);
-        renderExperienceEditor();
-      }
+      const exp = activeData[editingLang].experience.items[idx];
+      const role = exp && exp.role ? exp.role : `Pengalaman #${idx + 1}`;
+      showConfirmModal({
+        title: "Hapus Riwayat Pengalaman",
+        message: `Apakah Anda yakin ingin menghapus riwayat pengalaman <strong>"${escapeHtml(role)}"</strong>?`,
+        confirmText: "Ya, Hapus",
+        confirmClass: "btn-danger",
+        onConfirm: () => {
+          activeData[editingLang].experience.items.splice(idx, 1);
+          renderExperienceEditor();
+          showToast("Riwayat pengalaman berhasil dihapus.");
+        }
+      });
     },
 
     updateExp(idx, field, val) {
@@ -647,10 +753,19 @@
     },
 
     deleteCert(idx) {
-      if (confirm("Hapus sertifikasi ini?")) {
-        activeData[editingLang].education.certifications.splice(idx, 1);
-        renderEducationEditor();
-      }
+      const cert = activeData[editingLang].education.certifications[idx];
+      const title = cert && cert.title ? cert.title : `Sertifikasi #${idx + 1}`;
+      showConfirmModal({
+        title: "Hapus Sertifikasi & Lisensi",
+        message: `Apakah Anda yakin ingin menghapus sertifikasi <strong>"${escapeHtml(title)}"</strong>?`,
+        confirmText: "Ya, Hapus",
+        confirmClass: "btn-danger",
+        onConfirm: () => {
+          activeData[editingLang].education.certifications.splice(idx, 1);
+          renderEducationEditor();
+          showToast("Sertifikasi berhasil dihapus.");
+        }
+      });
     },
 
     updateCert(idx, field, val) {
@@ -674,12 +789,18 @@
     },
 
     resetDefaults() {
-      if (confirm("Kembalikan semua konten ke data awal PRD? Perubahan custom Anda akan dibersihkan.")) {
-        localStorage.removeItem("portfolio_custom_data");
-        loadData(true);
-        populateAllForms();
-        showToast("Data berhasil di-reset ke standar PRD.");
-      }
+      showConfirmModal({
+        title: "Kembalikan Data Awal (Reset Default)",
+        message: "Apakah Anda yakin ingin mengembalikan semua konten ke data awal PRD? Seluruh perubahan kustom yang tersimpan di browser Anda akan dibersihkan.",
+        confirmText: "Ya, Reset Semua Data",
+        confirmClass: "btn-danger",
+        onConfirm: () => {
+          localStorage.removeItem("portfolio_custom_data");
+          loadData(true);
+          populateAllForms();
+          showToast("Data berhasil di-reset ke standar PRD.");
+        }
+      });
     }
   };
 })();
