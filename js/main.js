@@ -1,6 +1,6 @@
 /**
  * Muhammad Farhan - Personal Portfolio Scripts
- * Handles: Bilingual toggling (ID/EN), Case Study Modal, Mobile Nav, and Contact Form submission
+ * Complete Bilingual Engine (ID/EN), Case Study Modal, Mobile Nav, and Contact Form
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,15 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileNavToggle = document.getElementById("mobile-nav-toggle");
   const navLinks = document.getElementById("nav-links");
   const caseStudyModal = document.getElementById("case-study-modal");
-  const openCaseStudyBtn = document.getElementById("open-case-study-btn");
   const closeCaseStudyBtn = document.getElementById("close-case-study-btn");
   const contactForm = document.getElementById("contact-form");
   const formAlert = document.getElementById("form-alert");
 
-  // Initialize Language
+  // Initial Language Setup
   applyLanguage(currentLang);
 
-  // Language Toggle Click
+  // Language Toggle Click Listener
   if (langToggleBtn) {
     langToggleBtn.addEventListener("click", () => {
       currentLang = currentLang === "id" ? "en" : "id";
@@ -36,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileNavToggle.setAttribute("aria-expanded", isExpanded);
     });
 
-    // Close nav on link click
     navLinks.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
         navLinks.classList.remove("open");
@@ -45,28 +43,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Case Study Modal
-  if (openCaseStudyBtn && caseStudyModal) {
-    openCaseStudyBtn.addEventListener("click", () => {
-      openModal();
-    });
-  }
-
+  // Case Study Modal Handlers
   if (closeCaseStudyBtn && caseStudyModal) {
-    closeCaseStudyBtn.addEventListener("click", () => {
-      closeModal();
-    });
+    closeCaseStudyBtn.addEventListener("click", closeModal);
   }
 
-  // Close modal when clicking backdrop
   if (caseStudyModal) {
     caseStudyModal.addEventListener("click", (e) => {
-      if (e.target === caseStudyModal) {
-        closeModal();
-      }
+      if (e.target === caseStudyModal) closeModal();
     });
 
-    // Escape key listener
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && caseStudyModal.classList.contains("active")) {
         closeModal();
@@ -75,11 +61,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function openModal() {
+    if (!caseStudyModal) return;
     caseStudyModal.classList.add("active");
     document.body.style.overflow = "hidden";
   }
 
   function closeModal() {
+    if (!caseStudyModal) return;
     caseStudyModal.classList.remove("active");
     document.body.style.overflow = "";
   }
@@ -108,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.innerHTML = currentLang === "id" ? "Mengirim..." : "Sending...";
 
       try {
-        // Attempt to post to local or deployed Express backend endpoint
         const response = await fetch("/api/contact", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -124,11 +111,10 @@ document.addEventListener("DOMContentLoaded", () => {
           );
           contactForm.reset();
         } else {
-          throw new Error("Server responded with error");
+          throw new Error("Server error");
         }
       } catch (err) {
-        // Fallback for static GitHub Pages deployment where backend is not running on same origin
-        // Open default mail client directly with prefilled parameters
+        // Fallback for static GitHub Pages
         const mailtoUrl = `mailto:farhn.mhmmad@gmail.com?subject=${encodeURIComponent(
           subject || `Inquiry from ${name} via Portfolio`
         )}&body=${encodeURIComponent(
@@ -162,31 +148,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 6000);
   }
 
-  // Language Swapping Engine
+  // Complete Language Swapping Function
   function applyLanguage(lang) {
     const data = window.portfolioData ? window.portfolioData[lang] : null;
     if (!data) return;
 
-    // Update Language Toggle Indicator
+    // Set HTML lang attribute
+    document.documentElement.lang = lang;
+
+    // Toggle Button Label
     if (langToggleBtn) {
       langToggleBtn.innerHTML = `<span>LANG:</span> <strong class="active-lang">${lang.toUpperCase()}</strong>`;
     }
 
-    // Update Navigation
+    // 1. Navigation
     updateText("nav-about", data.nav.about);
     updateText("nav-skills", data.nav.skills);
     updateText("nav-projects", data.nav.projects);
     updateText("nav-experience", data.nav.experience);
     updateText("nav-education", data.nav.education);
     updateText("nav-contact", data.nav.contact);
-    updateText("nav-cv-btn", data.nav.downloadCv);
+    updateHtml("nav-cv-btn", `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      ${data.nav.downloadCv}
+    `);
 
-    // Update Hero
-    updateText("hero-badge", data.hero.badge);
-    updateText("hero-headline", data.hero.headline);
-    updateText("hero-view-projects", data.hero.viewProjects);
-    updateText("hero-download-cv", data.hero.downloadCv);
-    updateText("hero-summary", data.personal.summary);
+    // 2. Hero Section
+    updateHtml("hero-badge", `<span class="status-dot"></span> ${data.hero.badge}`);
+    updateText("hero-summary", data.hero.headline + " " + data.personal.summary);
+    updateHtml("hero-view-projects", `
+      ${data.hero.viewProjects}
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    `);
+    updateHtml("hero-download-cv", `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      ${data.hero.downloadCv}
+    `);
 
     if (data.hero.metrics) {
       updateText("metric-val-1", data.hero.metrics[0].value);
@@ -197,32 +194,86 @@ document.addEventListener("DOMContentLoaded", () => {
       updateText("metric-lbl-3", data.hero.metrics[2].label);
     }
 
-    // Update About
+    // Hero Technical Identity Card
+    if (data.hero.card) {
+      updateText("hero-card-almamater-key", data.hero.card.almamaterKey);
+      updateText("hero-card-almamater-val", data.hero.card.almamaterVal);
+      updateText("hero-card-focus-key", data.hero.card.focusKey);
+      updateText("hero-card-focus-val", data.hero.card.focusVal);
+      updateText("hero-card-domicile-key", data.hero.card.domicileKey);
+      updateText("hero-card-domicile-val", data.hero.card.domicileVal);
+      updateText("hero-card-status-key", data.hero.card.statusKey);
+      updateText("hero-card-status-val", data.hero.card.statusVal);
+    }
+
+    // 3. About Me Section
     updateText("about-title", data.about.title);
     updateText("about-subtitle", data.about.subtitle);
-    updateText("about-bio-text", data.about.bio);
+    updateText("about-bio-p1", data.about.bioP1);
+    updateText("about-bio-p2", data.about.bioP2);
 
-    // Update Skills
+    if (data.about.stats) {
+      updateText("about-stat-edu-title", data.about.stats.eduTitle);
+      updateText("about-stat-edu-val", data.about.stats.eduDegree);
+      updateText("about-stat-edu-sub", data.about.stats.eduSchool);
+
+      updateText("about-stat-gpa-title", data.about.stats.gpaTitle);
+      updateText("about-stat-gpa-val", data.about.stats.gpaValue);
+      updateText("about-stat-gpa-sub", data.about.stats.gpaScale);
+
+      updateText("about-stat-loc-title", data.about.stats.locTitle);
+      updateText("about-stat-loc-val", data.about.stats.locValue);
+      updateText("about-stat-loc-sub", data.about.stats.locSub);
+    }
+
+    // 4. Skills Section
     updateText("skills-title", data.skills.title);
     updateText("skills-subtitle", data.skills.subtitle);
     renderSkills(data.skills.categories);
 
-    // Update Projects
+    // 5. Projects Section & Case Study
     updateText("projects-title", data.projects.title);
     updateText("projects-subtitle", data.projects.subtitle);
-    renderFeaturedProject(data.projects.item, data.projects.featuredTag, data.projects.caseStudyBtn);
+    renderFeaturedProject(data.projects);
 
-    // Update Experience
+    // 6. Case Study Modal Content
+    if (data.projects.modal) {
+      updateText("modal-title-text", data.projects.modal.title);
+      updateText("modal-sec1-title", data.projects.modal.section1Title);
+      updateText("modal-sec1-body", data.projects.modal.section1Body);
+      updateText("modal-sec2-title", data.projects.modal.section2Title);
+      updateHtml("modal-sec2-intro", data.projects.modal.section2Intro);
+      
+      const modalPointsList = document.getElementById("modal-sec2-points");
+      if (modalPointsList && data.projects.modal.section2Points) {
+        modalPointsList.innerHTML = data.projects.modal.section2Points
+          .map(pt => `<li>${pt}</li>`)
+          .join("");
+      }
+
+      updateText("modal-sec3-title", data.projects.modal.section3Title);
+      const modalStepsEl = document.getElementById("modal-sec3-steps");
+      if (modalStepsEl && data.projects.modal.section3Steps) {
+        modalStepsEl.innerHTML = data.projects.modal.section3Steps.join("<br>");
+      }
+
+      updateText("modal-sec4-title", data.projects.modal.section4Title);
+      updateText("modal-sec4-body", data.projects.modal.section4Body);
+    }
+
+    // 7. Experience Section
     updateText("experience-title", data.experience.title);
     updateText("experience-subtitle", data.experience.subtitle);
     renderExperience(data.experience.items);
 
-    // Update Education
+    // 8. Education & Certifications Section
     updateText("education-title", data.education.title);
     updateText("education-subtitle", data.education.subtitle);
+    updateText("education-tag", data.education.degreeTag);
+    updateText("certifications-tag", data.education.certTag);
     renderEducation(data.education);
 
-    // Update Contact
+    // 9. Contact Section
     updateText("contact-title", data.contact.title);
     updateText("contact-subtitle", data.contact.subtitle);
     updateText("contact-pitch", data.contact.pitch);
@@ -230,26 +281,54 @@ document.addEventListener("DOMContentLoaded", () => {
     updateText("contact-email-label", data.contact.emailLabel);
     updateText("contact-phone-label", data.contact.phoneLabel);
     updateText("contact-location-label", data.contact.locationLabel);
-    updateText("contact-form-title", data.contact.formTitle);
-    updateText("contact-submit-btn", data.contact.submitBtn);
-    updateText("contact-email-btn", data.contact.emailDirectBtn);
-    updateText("contact-linkedin-btn", data.contact.linkedinBtn);
+    updateText("contact-location-val", data.personal.location);
+    updateHtml("contact-email-btn", `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      ${data.contact.emailDirectBtn}
+    `);
+    updateHtml("contact-linkedin-btn", `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      ${data.contact.linkedinBtn}
+    `);
+    updateHtml("contact-form-title", `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+      ${data.contact.formTitle}
+    `);
 
-    // Update Form Placeholders
+    // Form field labels
+    if (data.contact.formLabels) {
+      updateText("label-form-name", data.contact.formLabels.name);
+      updateText("label-form-email", data.contact.formLabels.email);
+      updateText("label-form-subject", data.contact.formLabels.subject);
+      updateText("label-form-message", data.contact.formLabels.message);
+    }
     setPlaceholder("form-name", data.contact.namePlaceholder);
     setPlaceholder("form-email", data.contact.emailPlaceholder);
     setPlaceholder("form-subject", data.contact.subjectPlaceholder);
     setPlaceholder("form-message", data.contact.messagePlaceholder);
+    updateHtml("contact-submit-btn", `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      ${data.contact.submitBtn}
+    `);
+
+    // 10. Footer
+    updateText("footer-copy", data.footer.copy);
+    updateText("footer-back-to-top", data.footer.backToTop);
   }
 
   function updateText(elementId, text) {
     const el = document.getElementById(elementId);
-    if (el && text) el.textContent = text;
+    if (el && text !== undefined) el.textContent = text;
+  }
+
+  function updateHtml(elementId, html) {
+    const el = document.getElementById(elementId);
+    if (el && html !== undefined) el.innerHTML = html;
   }
 
   function setPlaceholder(elementId, text) {
     const el = document.getElementById(elementId);
-    if (el && text) el.setAttribute("placeholder", text);
+    if (el && text !== undefined) el.setAttribute("placeholder", text);
   }
 
   function renderSkills(categories) {
@@ -272,15 +351,17 @@ document.addEventListener("DOMContentLoaded", () => {
     `).join("");
   }
 
-  function renderFeaturedProject(item, featuredTag, caseStudyBtnText) {
+  function renderFeaturedProject(projectsData) {
     const container = document.getElementById("featured-project-container");
-    if (!container || !item) return;
+    if (!container || !projectsData || !projectsData.item) return;
+
+    const item = projectsData.item;
 
     container.innerHTML = `
       <div class="project-card">
         <div class="project-card-header">
           <div class="project-meta-bar">
-            <span class="project-featured-badge">${featuredTag}</span>
+            <span class="project-featured-badge">${projectsData.featuredTag}</span>
             <span class="project-period">${item.period}</span>
           </div>
           <h3 class="project-title">${item.title}</h3>
@@ -294,14 +375,14 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="case-block">
             <h4 class="case-block-title">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              Problem Statement
+              ${projectsData.problemTitle}
             </h4>
             <p class="case-block-text">${item.problem}</p>
           </div>
           <div class="case-block">
             <h4 class="case-block-title">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-              My Role & Impact
+              ${projectsData.roleTitle}
             </h4>
             <p class="case-block-text">${item.role}</p>
             <p class="case-block-text" style="margin-top: 0.5rem; color: var(--brand-lime);">${item.result}</p>
@@ -311,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="pipeline-section">
           <h4 class="pipeline-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            System Pipeline & Decision Architecture
+            ${projectsData.pipelineTitle}
           </h4>
           <div class="pipeline-steps">
             ${item.pipeline.map(p => `
@@ -326,11 +407,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div class="project-card-footer">
           <div class="roles-wrapper">
-            <span>Tingkat Hak Akses:</span>
+            <span>${projectsData.accessLevels}</span>
             ${item.rolesList.map(r => `<span class="role-badge">${r}</span>`).join("")}
           </div>
           <button id="open-case-study-btn" class="btn btn-outline btn-sm">
-            ${caseStudyBtnText}
+            ${projectsData.caseStudyBtn}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
           </button>
         </div>
@@ -339,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Reattach modal open event
     const newBtn = document.getElementById("open-case-study-btn");
-    if (newBtn && caseStudyModal) {
+    if (newBtn) {
       newBtn.addEventListener("click", openModal);
     }
   }
@@ -364,7 +445,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const degEl = document.getElementById("education-details");
     if (degEl && eduData.degree) {
       degEl.innerHTML = `
-        <span class="card-tag">Pendidikan Formal</span>
         <h3 class="edu-degree">${eduData.degree.title}</h3>
         <div class="edu-school">${eduData.degree.institution}</div>
         <div class="edu-meta">

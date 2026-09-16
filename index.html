@@ -147,20 +147,20 @@
 
               <div class="profile-card-details">
                 <div class="detail-row">
-                  <span class="detail-key">Almamater:</span>
-                  <span class="detail-val">Univ. Pamulang</span>
+                  <span class="detail-key" id="hero-card-almamater-key">Almamater:</span>
+                  <span class="detail-val" id="hero-card-almamater-val">Univ. Pamulang</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-key">Fokus Studi:</span>
-                  <span class="detail-val">Rekayasa Perangkat Lunak & SPK</span>
+                  <span class="detail-key" id="hero-card-focus-key">Fokus Studi:</span>
+                  <span class="detail-val" id="hero-card-focus-val">Rekayasa Perangkat Lunak & SPK</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-key">Domisili:</span>
-                  <span class="detail-val">Pamulang, Tangerang Selatan</span>
+                  <span class="detail-key" id="hero-card-domicile-key">Domisili:</span>
+                  <span class="detail-val" id="hero-card-domicile-val">Pamulang, Tangerang Selatan</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-key">Status:</span>
-                  <span class="detail-val" style="color: var(--brand-lime);">Open for Opportunities</span>
+                  <span class="detail-key" id="hero-card-status-key">Status:</span>
+                  <span class="detail-val" id="hero-card-status-val" style="color: var(--brand-lime);">Tersedia untuk Peluang Baru</span>
                 </div>
               </div>
             </div>
@@ -181,29 +181,29 @@
 
         <div class="about-grid">
           <div class="about-bio">
-            <p id="about-bio-text">
+            <p id="about-bio-p1">
               Lulusan Teknik Informatika dengan minat kuat di bidang pengembangan sistem dan pemeliharaan infrastruktur TI. Memiliki pengalaman dalam merancang Sistem Pendukung Keputusan (SPK) serta terbiasa melakukan troubleshooting perangkat keras dan lunak untuk mengoptimalkan performa sistem.
             </p>
-            <p>
+            <p id="about-bio-p2">
               Dengan latar belakang akademik yang kokoh di bidang ilmu komputer dan pengalaman praktis dalam perancangan algoritma serta administrasi jaringan, saya berkomitmen untuk menghadirkan solusi teknologi yang terstruktur, efisien, dan berdampak nyata bagi instansi maupun bisnis.
             </p>
           </div>
 
           <div class="about-stats-grid">
             <div class="stat-item">
-              <span class="stat-label">Pendidikan Terakhir</span>
-              <span class="stat-value">Sarjana Teknik Informatika (S.Kom)</span>
-              <span style="font-size: 0.85rem; color: var(--text-muted);">Universitas Pamulang</span>
+              <span class="stat-label" id="about-stat-edu-title">Pendidikan Terakhir</span>
+              <span class="stat-value" id="about-stat-edu-val">Sarjana Teknik Informatika (S.Kom)</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted);" id="about-stat-edu-sub">Universitas Pamulang</span>
             </div>
             <div class="stat-item">
-              <span class="stat-label">Indeks Prestasi Kumulatif (IPK)</span>
-              <span class="stat-value" style="color: var(--brand-lime);">3.33 / 4.00</span>
-              <span style="font-size: 0.85rem; color: var(--text-muted);">Skala 4.00</span>
+              <span class="stat-label" id="about-stat-gpa-title">Indeks Prestasi Kumulatif (IPK)</span>
+              <span class="stat-value" style="color: var(--brand-lime);" id="about-stat-gpa-val">3.33 / 4.00</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted);" id="about-stat-gpa-sub">Skala 4.00</span>
             </div>
             <div class="stat-item">
-              <span class="stat-label">Lokasi Saat Ini</span>
-              <span class="stat-value">Pamulang, Tangerang Selatan</span>
-              <span style="font-size: 0.85rem; color: var(--text-muted);">Banten, Indonesia</span>
+              <span class="stat-label" id="about-stat-loc-title">Lokasi Saat Ini</span>
+              <span class="stat-value" id="about-stat-loc-val">Pamulang, Tangerang Selatan</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted);" id="about-stat-loc-sub">Banten, Indonesia</span>
             </div>
           </div>
         </div>
@@ -272,13 +272,16 @@
 
         <div class="edu-cert-grid">
           <!-- Education Details -->
-          <div id="education-details" class="edu-card">
-            <!-- Populated dynamically -->
+          <div class="edu-card">
+            <span class="card-tag" id="education-tag">Pendidikan Formal</span>
+            <div id="education-details">
+              <!-- Populated dynamically -->
+            </div>
           </div>
 
           <!-- Certifications -->
           <div class="cert-card">
-            <span class="card-tag">Sertifikasi & Lisensi</span>
+            <span class="card-tag" id="certifications-tag">Sertifikasi & Lisensi</span>
             <div id="certifications-list" class="cert-list">
               <!-- Populated dynamically -->
             </div>
@@ -335,7 +338,7 @@
                 </div>
                 <div class="channel-content">
                   <span class="channel-label" id="contact-location-label">Lokasi</span>
-                  <span class="channel-val">Pamulang, Tangerang Selatan</span>
+                  <span class="channel-val" id="contact-location-val">Pamulang, Tangerang Selatan</span>
                 </div>
               </div>
             </div>
@@ -361,22 +364,22 @@
 
             <form id="contact-form">
               <div class="form-group">
-                <label for="form-name" class="form-label">Nama Lengkap *</label>
+                <label for="form-name" class="form-label" id="label-form-name">Nama Lengkap *</label>
                 <input type="text" id="form-name" class="form-input" required placeholder="Nama Lengkap Anda">
               </div>
 
               <div class="form-group">
-                <label for="form-email" class="form-label">Email Anda *</label>
+                <label for="form-email" class="form-label" id="label-form-email">Email Anda *</label>
                 <input type="email" id="form-email" class="form-input" required placeholder="alamat.email@anda.com">
               </div>
 
               <div class="form-group">
-                <label for="form-subject" class="form-label">Subjek / Topik</label>
+                <label for="form-subject" class="form-label" id="label-form-subject">Subjek / Topik</label>
                 <input type="text" id="form-subject" class="form-input" placeholder="Terkait Peluang / Diskusi Proyek">
               </div>
 
               <div class="form-group">
-                <label for="form-message" class="form-label">Pesan *</label>
+                <label for="form-message" class="form-label" id="label-form-message">Pesan *</label>
                 <textarea id="form-message" class="form-textarea" required placeholder="Tuliskan pesan atau penawaran Anda di sini..."></textarea>
               </div>
 
@@ -407,22 +410,22 @@
 
       <div class="modal-body">
         <div>
-          <h4 style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
+          <h4 id="modal-sec1-title" style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
             Ringkasan & Latar Belakang Masalah
           </h4>
-          <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+          <p id="modal-sec1-body" style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
             SDN Lebak Bulus 04 membutuhkan mekanisme evaluasi kinerja tenaga pengajar yang terotomatisasi, transparan, dan terbebas dari bias subjektivitas. Proses penilaian manual sebelumnya memakan waktu audit yang lama dan rentan terhadap ketidaksesuaian pembobotan indikator penilaian.
           </p>
         </div>
 
         <div>
-          <h4 style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
+          <h4 id="modal-sec2-title" style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
             Peran & Kontribusi Utama
           </h4>
-          <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+          <p id="modal-sec2-intro" style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
             Sebagai <strong>Pengembang Sistem</strong>, tanggung jawab utama berfokus pada:
           </p>
-          <ul style="color: var(--text-secondary); margin-left: 1.25rem; margin-top: 0.5rem; line-height: 1.7; font-size: 0.9rem;">
+          <ul id="modal-sec2-points" style="color: var(--text-secondary); margin-left: 1.25rem; margin-top: 0.5rem; line-height: 1.7; font-size: 0.9rem;">
             <li>Merancang arsitektur basis data relasional untuk integritas data penilaian dan bukti dukung fisik.</li>
             <li>Mengimplementasikan alur komputasi algoritma Multi-Criteria Decision Making (MCDM) menggunakan metode SAW (Simple Additive Weighting) dan TOPSIS.</li>
             <li>Membangun manajemen hak akses berlapis (Multi-user Authentication: Admin, Penilai, Guest) untuk menjaga kerahasiaan dan akuntabilitas data.</li>
@@ -431,10 +434,10 @@
         </div>
 
         <div>
-          <h4 style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
+          <h4 id="modal-sec3-title" style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
             Alur Komputasi Keputusan
           </h4>
-          <div style="background: var(--bg-code); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8;">
+          <div id="modal-sec3-steps" style="background: var(--bg-code); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8;">
             [1] Input Data Guru & Kriteria Penilaian<br>
             &nbsp;↓<br>
             [2] Pembentukan Matriks Keputusan (X)<br>
@@ -452,10 +455,10 @@
         </div>
 
         <div>
-          <h4 style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
+          <h4 id="modal-sec4-title" style="color: var(--brand-lime); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">
             Hasil & Dampak Implementasi
           </h4>
-          <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+          <p id="modal-sec4-body" style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
             Model SPK berhasil memberikan rekomendasi peringkat kinerja guru secara akurat dan objektif, memangkas durasi rekapitulasi evaluasi, serta menjadi acuan berbasis data yang valid bagi pihak manajemen sekolah dalam pengambilan keputusan.
           </p>
         </div>
@@ -470,7 +473,7 @@
     <div class="container footer-inner">
       <div class="footer-credits">
         <span class="footer-name">Muhammad Farhan</span>
-        <span class="footer-copy">Sarjana Teknik Informatika — Universitas Pamulang. All rights reserved.</span>
+        <span class="footer-copy" id="footer-copy">Sarjana Teknik Informatika — Universitas Pamulang. All rights reserved.</span>
       </div>
 
       <div class="footer-links">
@@ -480,7 +483,7 @@
         <span>•</span>
         <a href="https://www.linkedin.com/in/muhammad-farhan" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <span>•</span>
-        <a href="#home">Kembali ke Atas ↑</a>
+        <a href="#home" id="footer-back-to-top">Kembali ke Atas ↑</a>
       </div>
     </div>
   </footer>
