@@ -6,6 +6,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   let currentLang = localStorage.getItem("portfolio_lang") || "id";
 
+  // Check if custom data exists in localStorage from Admin CMS
+  try {
+    const savedCustomData = localStorage.getItem("portfolio_custom_data");
+    if (savedCustomData) {
+      window.portfolioData = JSON.parse(savedCustomData);
+    }
+  } catch (err) {
+    console.warn("Could not load custom portfolio data from localStorage:", err);
+  }
+
   // Elements
   const langToggleBtn = document.getElementById("lang-toggle-btn");
   const mobileNavToggle = document.getElementById("mobile-nav-toggle");

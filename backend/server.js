@@ -140,6 +140,34 @@ app.post("/api/contact", (req, res) => {
   });
 });
 
+// Serve Admin Page
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(rootPath, "admin.html"));
+});
+
+/**
+ * @route   POST /api/admin/save
+ * @desc    Save updated portfolio data to js/data.js on disk
+ */
+app.post("/api/admin/save", (req, res) => {
+  const { data } = req.body;
+  if (!data) {
+    return res.status(400).json({ error: "Data payload required" });
+  }
+
+  try {
+    const dataFilePath = path.join(rootPath, "js", "data.js");
+    const fileContent = `/**\n * Muhammad Farhan - Personal Portfolio Data\n * Updated via Admin CMS\n */\n\nconst portfolioData = ${JSON.stringify(data, null, 2)};\n\nif (typeof window !== "undefined") {\n  window.portfolioData = portfolioData;\n}\n\nif (typeof module !== "undefined" && module.exports) {\n  module.exports = portfolioData;\n}\n`;
+    fs.writeFileSync(dataFilePath, fileContent, "utf-8");
+    portfolioData = data;
+    console.log("✅ Data portofolio berhasil diperbarui via Admin CMS!");
+    return res.json({ success: true, message: "File js/data.js successfully updated" });
+  } catch (err) {
+    console.error("Failed to save data.js:", err);
+    return res.status(500).json({ error: "Failed to write data file: " + err.message });
+  }
+});
+
 // Serve frontend static files from parent folder in fullstack mode
 const rootPath = path.join(__dirname, "..");
 app.use(express.static(rootPath));

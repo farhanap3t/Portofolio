@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Admin Panel — Muhammad Farhan Portfolio</title>
+  
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       LOGIN VIEW (SHOWN WHEN UNAUTHENTICATED)
+       ========================================================================== -->
+  <div id="login-view" class="login-wrapper">
+    <div class="login-card">
+      <span class="login-badge">AUTHENTICATION REQUIRED</span>
+      <h1 class="login-title">Admin CMS Login</h1>
+      <p class="login-desc">Masuk untuk mengelola dan memperbarui seluruh isi portofolio tanpa mengubah kode.</p>
+
+      <form id="login-form">
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label class="form-label" for="login-username">Username</label>
+          <input type="text" id="login-username" class="form-input" required autocomplete="username" placeholder="admin">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label class="form-label" for="login-password">Password</label>
+          <input type="password" id="login-password" class="form-input" required autocomplete="current-password" placeholder="••••••••">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem;">
+          Masuk ke Panel Admin
+        </button>
+
+        <div id="login-error" style="color: #f87171; font-size: 0.85rem; margin-top: 1rem; display: none; text-align: center;"></div>
+        
+        <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-admin); padding-top: 1rem; text-align: center;">
+          <a href="index.html" style="font-size: 0.85rem; color: var(--text-sub);">← Kembali ke Halaman Utama Portofolio</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       ADMIN APP (SHOWN WHEN AUTHENTICATED)
+       ========================================================================== -->
+  <div id="admin-app" class="admin-app">
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="admin-brand">
+        <span class="admin-logo">CMS</span>
+        <span class="admin-title">Muhammad Farhan — Content Manager</span>
+      </div>
+
+      <div class="admin-actions">
+        <!-- Language Editor Selector -->
+        <select id="admin-lang-select" class="form-select" style="width: auto; padding: 0.4rem 0.75rem; font-family: var(--font-mono); font-size: 0.8rem;">
+          <option value="id">Mode Bahasa: Indonesia (ID)</option>
+          <option value="en">Mode Bahasa: English (EN)</option>
+        </select>
+
+        <button id="save-all-btn" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Simpan Perubahan
+        </button>
+
+        <a href="index.html" target="_blank" class="btn btn-secondary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Lihat Web
+        </a>
+
+        <button id="export-btn" class="btn btn-secondary" title="Unduh file data.js terbaru">
+          Export data.js
+        </button>
+
+        <button id="reset-btn" class="btn btn-danger btn-sm" title="Kembalikan semua ke data awal PRD">
+          Reset Default
+        </button>
+
+        <button id="logout-btn" class="btn btn-secondary btn-sm">
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- Tabs Bar -->
+    <nav class="admin-tabs-bar">
+      <button class="tab-btn active" data-tab="tab-profile">Profil & Hero</button>
+      <button class="tab-btn" data-tab="tab-projects">Proyek (Projects)</button>
+      <button class="tab-btn" data-tab="tab-skills">Keahlian (Skills)</button>
+      <button class="tab-btn" data-tab="tab-experience">Pengalaman (Experience)</button>
+      <button class="tab-btn" data-tab="tab-education">Pendidikan & Sertifikasi</button>
+    </nav>
+
+    <!-- Main Content Panels -->
+    <main class="admin-content">
+      <!-- 1. TAB: PROFIL & HERO -->
+      <section id="tab-profile" class="tab-panel active">
+        <div class="admin-section-card">
+          <div class="section-card-header">
+            <div>
+              <h2 class="section-card-title">Informasi Pribadi & Kontak</h2>
+              <p class="section-card-desc">Data umum, media sosial, dan kontak yang tampil di header, footer, serta form.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="input-name">Nama Lengkap</label>
+              <input type="text" id="input-name" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="input-role">Gelar / Role Profesional</label>
+              <input type="text" id="input-role" class="form-input">
+            </div>
+
+            <div class="form-group form-grid-full">
+              <label class="form-label" for="input-tagline">Spesifikasi Bidang Keahlian</label>
+              <input type="text" id="input-tagline" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="input-email">Email</label>
+              <input type="email" id="input-email" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="input-phone">Nomor Telepon / WhatsApp</label>
+              <input type="text" id="input-phone" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="input-location">Domisili / Lokasi</label>
+              <input type="text" id="input-location" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="input-linkedin">URL Profil LinkedIn</label>
+              <input type="text" id="input-linkedin" class="form-input">
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-section-card">
+          <div class="section-card-header">
+            <div>
+              <h2 class="section-card-title">Hero Section & Metrik Utama</h2>
+              <p class="section-card-desc">Teks pembuka dan badge status ketersediaan di halaman depan.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group form-grid-full">
+              <label class="form-label" for="input-hero-badge">Teks Status Badge</label>
+              <input type="text" id="input-hero-badge" class="form-input">
+            </div>
+
+            <div class="form-group form-grid-full">
+              <label class="form-label" for="input-hero-headline">Headline Singkat</label>
+              <input type="text" id="input-hero-headline" class="form-input">
+            </div>
+
+            <div class="form-group form-grid-full">
+              <label class="form-label" for="input-summary">Ringkasan Narasi Profil</label>
+              <textarea id="input-summary" class="form-textarea" style="min-height: 110px;"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="input-hero-status-val">Status Ketersediaan (Kartu Teknis)</label>
+              <input type="text" id="input-hero-status-val" class="form-input">
+            </div>
+
+            <div class="form-group form-grid-full" style="margin-top: 1rem; border-top: 1px solid var(--border-admin); padding-top: 1rem;">
+              <label class="form-label">Tiga Metrik Kunci Hero:</label>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                <div>
+                  <input type="text" id="input-metric-val-1" class="form-input" placeholder="Nilai (e.g. 3.33)">
+                  <input type="text" id="input-metric-lbl-1" class="form-input" style="margin-top: 0.35rem;" placeholder="Label">
+                </div>
+                <div>
+                  <input type="text" id="input-metric-val-2" class="form-input" placeholder="Nilai">
+                  <input type="text" id="input-metric-lbl-2" class="form-input" style="margin-top: 0.35rem;" placeholder="Label">
+                </div>
+                <div>
+                  <input type="text" id="input-metric-val-3" class="form-input" placeholder="Nilai">
+                  <input type="text" id="input-metric-lbl-3" class="form-input" style="margin-top: 0.35rem;" placeholder="Label">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-section-card">
+          <div class="section-card-header">
+            <div>
+              <h2 class="section-card-title">Bagian About Me</h2>
+              <p class="section-card-desc">Paragraf penjelasan latar belakang dan kartu statistik tentang Anda.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group form-grid-full">
+              <label class="form-label" for="input-about-bio-p1">Paragraf 1</label>
+              <textarea id="input-about-bio-p1" class="form-textarea"></textarea>
+            </div>
+            <div class="form-group form-grid-full">
+              <label class="form-label" for="input-about-bio-p2">Paragraf 2</label>
+              <textarea id="input-about-bio-p2" class="form-textarea"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-about-degree">Pendidikan Ditampilkan</label>
+              <input type="text" id="input-about-degree" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-about-school">Nama Kampus</label>
+              <input type="text" id="input-about-school" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-about-gpa">Nilai IPK</label>
+              <input type="text" id="input-about-gpa" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-about-loc">Lokasi</label>
+              <input type="text" id="input-about-loc" class="form-input">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. TAB: PROJECTS -->
+      <section id="tab-projects" class="tab-panel">
+        <div class="admin-section-card">
+          <div class="section-card-header">
+            <div>
+              <h2 class="section-card-title">Kelola Proyek & Studi Kasus</h2>
+              <p class="section-card-desc">Edit proyek unggulan, alur komputasi keputusan, metodologi, dan dampaknya.</p>
+            </div>
+          </div>
+
+          <div id="project-editor-container">
+            <!-- Rendered by js/admin.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. TAB: SKILLS -->
+      <section id="tab-skills" class="tab-panel">
+        <div class="admin-section-card">
+          <div class="section-card-header">
+            <div>
+              <h2 class="section-card-title">Kelola Kategori & Item Keahlian</h2>
+              <p class="section-card-desc">Tambahkan item keahlian teknis (HTML, PHP, MySQL, Docker, dll.) tanpa progress bar.</p>
+            </div>
+            <button id="add-skill-cat-btn" class="btn btn-secondary btn-sm">+ Tambah Kategori Baru</button>
+          </div>
+
+          <div id="skills-editor-container">
+            <!-- Rendered by js/admin.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. TAB: EXPERIENCE -->
+      <section id="tab-experience" class="tab-panel">
+        <div class="admin-section-card">
+          <div class="section-card-header">
+            <div>
+              <h2 class="section-card-title">Kelola Riwayat Pengalaman Kerja</h2>
+              <p class="section-card-desc">Tambah, ubah, atau hapus riwayat pekerjaan profesional maupun freelance.</p>
+            </div>
+            <button id="add-exp-btn" class="btn btn-secondary btn-sm">+ Tambah Pengalaman</button>
+          </div>
+
+          <div id="experience-editor-container">
+            <!-- Rendered by js/admin.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. TAB: EDUCATION & CERTIFICATIONS -->
+      <section id="tab-education" class="tab-panel">
+        <div class="admin-section-card">
+          <div class="section-card-header">
+            <div>
+              <h2 class="section-card-title">Pendidikan Formal</h2>
+              <p class="section-card-desc">Kualifikasi akademik sarjana.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="input-edu-degree">Gelar & Program Studi</label>
+              <input type="text" id="input-edu-degree" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-edu-school">Universitas / Institusi</label>
+              <input type="text" id="input-edu-school" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-edu-period">Tahun Periode Studi</label>
+              <input type="text" id="input-edu-period" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-edu-gpa">IPK</label>
+              <input type="text" id="input-edu-gpa" class="form-input">
+            </div>
+            <div class="form-group form-grid-full">
+              <label class="form-label" for="input-edu-desc">Deskripsi Capaian Akademik</label>
+              <textarea id="input-edu-desc" class="form-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-section-card">
+          <div class="section-card-header">
+            <div>
+              <h2 class="section-card-title">Sertifikasi & Lisensi</h2>
+              <p class="section-card-desc">Daftar sertifikasi kompetensi (LSP, TOEFL, dll.).</p>
+            </div>
+            <button id="add-cert-btn" class="btn btn-secondary btn-sm">+ Tambah Sertifikasi</button>
+          </div>
+
+          <div id="cert-editor-container">
+            <!-- Rendered by js/admin.js -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Alert -->
+  <div id="toast-msg" class="toast-msg"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
