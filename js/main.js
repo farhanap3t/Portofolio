@@ -423,13 +423,17 @@ document.addEventListener("DOMContentLoaded", () => {
             <span>${projectsData.accessLevels}</span>
             ${(item.rolesList || []).map(r => `<span class="role-badge">${r}</span>`).join("")}
           </div>
-          <button class="btn btn-outline btn-sm open-case-study-btn" data-idx="${idx}">
+          <button type="button" class="btn btn-outline btn-sm open-case-study-btn" data-idx="${idx}" onclick="window.openCaseStudyModal(${idx})">
             ${projectsData.caseStudyBtn}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
           </button>
         </div>
       </div>
     `).join("");
+
+    window.openCaseStudyModal = (idx) => {
+      openProjectModal(items[idx], projectsData);
+    };
 
     // Attach click event for each project's modal
     container.querySelectorAll(".open-case-study-btn").forEach(btn => {

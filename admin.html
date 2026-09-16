@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/admin.css?v=1.0.3">
 </head>
 <body>
 
@@ -23,18 +23,18 @@
       <h1 class="login-title">Admin CMS Login</h1>
       <p class="login-desc">Masuk untuk mengelola dan memperbarui seluruh isi portofolio tanpa mengubah kode.</p>
 
-      <form id="login-form">
+      <form id="login-form" onsubmit="window.adminCMS.submitLogin(event)">
         <div class="form-group" style="margin-bottom: 1.25rem;">
           <label class="form-label" for="login-username">Username</label>
-          <input type="text" id="login-username" class="form-input" required autocomplete="username" placeholder="admin">
+          <input type="text" id="login-username" class="form-input" required autocomplete="username" value="admin">
         </div>
 
         <div class="form-group" style="margin-bottom: 1.5rem;">
           <label class="form-label" for="login-password">Password</label>
-          <input type="password" id="login-password" class="form-input" required autocomplete="current-password" placeholder="••••••••">
+          <input type="password" id="login-password" class="form-input" required autocomplete="current-password" value="farhan2026">
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem;">
+        <button type="submit" id="login-btn" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem;">
           Masuk ke Panel Admin
         </button>
 
@@ -60,12 +60,12 @@
 
       <div class="admin-actions">
         <!-- Language Editor Selector -->
-        <select id="admin-lang-select" class="form-select" style="width: auto; padding: 0.4rem 0.75rem; font-family: var(--font-mono); font-size: 0.8rem;">
+        <select id="admin-lang-select" class="form-select" style="width: auto; padding: 0.4rem 0.75rem; font-family: var(--font-mono); font-size: 0.8rem;" onchange="window.adminCMS.switchLanguage(this.value)">
           <option value="id">Mode Bahasa: Indonesia (ID)</option>
           <option value="en">Mode Bahasa: English (EN)</option>
         </select>
 
-        <button id="save-all-btn" class="btn btn-primary">
+        <button type="button" id="save-all-btn" class="btn btn-primary" onclick="window.adminCMS.saveAll()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
           Simpan Perubahan
         </button>
@@ -75,15 +75,15 @@
           Lihat Web
         </a>
 
-        <button id="export-btn" class="btn btn-secondary" title="Unduh file data.js terbaru">
+        <button type="button" id="export-btn" class="btn btn-secondary" title="Unduh file data.js terbaru" onclick="window.adminCMS.exportData()">
           Export data.js
         </button>
 
-        <button id="reset-btn" class="btn btn-danger btn-sm" title="Kembalikan semua ke data awal PRD">
+        <button type="button" id="reset-btn" class="btn btn-danger btn-sm" title="Kembalikan semua ke data awal PRD" onclick="window.adminCMS.resetDefaults()">
           Reset Default
         </button>
 
-        <button id="logout-btn" class="btn btn-secondary btn-sm">
+        <button type="button" id="logout-btn" class="btn btn-secondary btn-sm" onclick="window.adminCMS.logout()">
           Logout
         </button>
       </div>
@@ -91,11 +91,11 @@
 
     <!-- Tabs Bar -->
     <nav class="admin-tabs-bar">
-      <button class="tab-btn active" data-tab="tab-profile">Profil & Hero</button>
-      <button class="tab-btn" data-tab="tab-projects">Proyek (Projects)</button>
-      <button class="tab-btn" data-tab="tab-skills">Keahlian (Skills)</button>
-      <button class="tab-btn" data-tab="tab-experience">Pengalaman (Experience)</button>
-      <button class="tab-btn" data-tab="tab-education">Pendidikan & Sertifikasi</button>
+      <button type="button" class="tab-btn active" data-tab="tab-profile" onclick="window.adminCMS.switchTab('tab-profile', this)">Profil & Hero</button>
+      <button type="button" class="tab-btn" data-tab="tab-projects" onclick="window.adminCMS.switchTab('tab-projects', this)">Proyek (Projects)</button>
+      <button type="button" class="tab-btn" data-tab="tab-skills" onclick="window.adminCMS.switchTab('tab-skills', this)">Keahlian (Skills)</button>
+      <button type="button" class="tab-btn" data-tab="tab-experience" onclick="window.adminCMS.switchTab('tab-experience', this)">Pengalaman (Experience)</button>
+      <button type="button" class="tab-btn" data-tab="tab-education" onclick="window.adminCMS.switchTab('tab-education', this)">Pendidikan & Sertifikasi</button>
     </nav>
 
     <!-- Main Content Panels -->
@@ -242,7 +242,7 @@
               <h2 class="section-card-title">Kelola Proyek & Studi Kasus</h2>
               <p class="section-card-desc">Tambah, ubah, atau hapus proyek portofolio, tag teknologi, dan alur pipeline.</p>
             </div>
-            <button id="add-project-btn" class="btn btn-primary btn-sm">+ Tambah Proyek Baru</button>
+            <button type="button" id="add-project-btn" class="btn btn-primary btn-sm" onclick="window.adminCMS.addNewProject()">+ Tambah Proyek Baru</button>
           </div>
 
           <div id="project-editor-container">
@@ -259,7 +259,7 @@
               <h2 class="section-card-title">Kelola Kategori & Item Keahlian</h2>
               <p class="section-card-desc">Tambahkan item keahlian teknis (HTML, PHP, MySQL, Docker, dll.) tanpa progress bar.</p>
             </div>
-            <button id="add-skill-cat-btn" class="btn btn-secondary btn-sm">+ Tambah Kategori Baru</button>
+            <button type="button" id="add-skill-cat-btn" class="btn btn-secondary btn-sm" onclick="window.adminCMS.addNewSkillCat()">+ Tambah Kategori Baru</button>
           </div>
 
           <div id="skills-editor-container">
@@ -276,7 +276,7 @@
               <h2 class="section-card-title">Kelola Riwayat Pengalaman Kerja</h2>
               <p class="section-card-desc">Tambah, ubah, atau hapus riwayat pekerjaan profesional maupun freelance.</p>
             </div>
-            <button id="add-exp-btn" class="btn btn-secondary btn-sm">+ Tambah Pengalaman</button>
+            <button type="button" id="add-exp-btn" class="btn btn-secondary btn-sm" onclick="window.adminCMS.addNewExp()">+ Tambah Pengalaman</button>
           </div>
 
           <div id="experience-editor-container">
@@ -325,7 +325,7 @@
               <h2 class="section-card-title">Sertifikasi & Lisensi</h2>
               <p class="section-card-desc">Daftar sertifikasi kompetensi (LSP, TOEFL, dll.).</p>
             </div>
-            <button id="add-cert-btn" class="btn btn-secondary btn-sm">+ Tambah Sertifikasi</button>
+            <button type="button" id="add-cert-btn" class="btn btn-secondary btn-sm" onclick="window.adminCMS.addNewCert()">+ Tambah Sertifikasi</button>
           </div>
 
           <div id="cert-editor-container">
@@ -339,9 +339,8 @@
   <!-- Toast Alert -->
   <div id="toast-msg" class="toast-msg"></div>
 
-  <!-- Scripts -->
-  <script src="js/data.js"></script>
-  <script src="js/admin.js"></script>
+  <!-- Scripts with Cache Busting -->
+  <script src="js/data.js?v=1.0.3"></script>
+  <script src="js/admin.js?v=1.0.3"></script>
 </body>
 </html>
-
